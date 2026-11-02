@@ -21,7 +21,7 @@ class Author(models.Model):
         return reverse('author-detail', args=[str(self.id)])
 
     def __str__(self):
-        return f'{self.last_name}, {self.first_name}'
+        return '%s, %s' % (self.last_name, self.first_name)
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
@@ -55,4 +55,4 @@ class BookInstance(models.Model):
         ordering = ['due_back']
 
     def __str__(self):
-        return f'{self.id} ({self.book.title})'
+        return '%s (%s)' % (self.id,self.book.title)
