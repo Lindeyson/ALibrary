@@ -1,0 +1,6 @@
+git add .venv/
+.venv/
+
+__pycache__/
+*.py[cod]
+
