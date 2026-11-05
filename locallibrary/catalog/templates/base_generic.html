@@ -1,57 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initialscale=1">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   {% load static %}
   <title>{% block title %}Local Library{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-2">
-        {% block sidebar %}
-          <ul class="side-nav">
-            <li><a href="{% url 'index' %}">Home</a></li>
-            <li><a href="{% url 'books' %}">All books</a></li>
-            <li><a href="{% url 'authors' %}">All authors</a></li>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="{% url 'index' %}">LocalLibrary</a>
+      {% block sidebar %}
+        <nav class="main-nav">
+          <ul>
+            <li><a href="{% url 'index' %}">Главная</a></li>
+            <li><a href="{% url 'books' %}">Книги</a></li>
+            <li><a href="{% url 'authors' %}">Авторы</a></li>
             {% if user.is_authenticated %}
-              <li>User: {{ user.get_username }}</li>
-              <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-            {% else %}
-              <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+              <li><a href="{% url 'my-borrowed' %}">Мои книги</a></li>
+              {% if perms.catalog.can_mark_returned %}
+                <li><a href="{% url 'all-borrowed' %}">Все выданные</a></li>
+              {% endif %}
             {% endif %}
           </ul>
-        {% endblock %}
-      </div>
-      <div class="col-sm-10 ">
-        {% block content %}{% endblock %}
-          {% block pagination %}
-                {% if is_paginated %}
-                    <div class="pagination">
-                        {% if page_obj.has_previous %}
-                            <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">
-                                Назад
-                            </a>
-                        {% endif %}
-                        <span>
-                            Страница {{ page_obj.number }}
-                            из {{ page_obj.paginator.num_pages }}
-                        </span>
-                        {% if page_obj.has_next %}
-                            <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">
-                                Вперёд
-                            </a>
-                        {% endif %}
-                    </div>
-                {% endif %}
-            {% endblock %}
-      </div>
+        </nav>
+        <div class="auth">
+          {% if user.is_authenticated %}
+            <span class="user">{{ user.get_username }}</span>
+            <form method="post" action="{% url 'logout' %}?next={{ request.path }}">
+              {% csrf_token %}
+              <button type="submit" class="btn-outline">Выйти</button>
+            </form>
+          {% else %}
+            <a class="btn-outline" href="{% url 'login' %}?next={{ request.path }}">Вход</a>
+          {% endif %}
+        </div>
+      {% endblock %}
     </div>
-  </div>
+  </header>
+
+  <main class="wrap page">
+    {% block content %}{% endblock %}
+    {% block pagination %}
+      {% if is_paginated %}
+        <div class="pagination">
+          {% if page_obj.has_previous %}
+            <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Назад</a>
+          {% endif %}
+          <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+          {% if page_obj.has_next %}
+            <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Вперёд</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">© 2026 LocalLibrary — учебный проект на Django</div>
+  </footer>
 </body>
 </html>

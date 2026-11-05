@@ -1,5 +1,359 @@
-.side-nav {
-    margin-top: 20px;
+:root {
+  --bg: #0a0a0a;
+  --surface: #141411;
+  --surface-2: #0f0f0d;
+  --line: rgba(201, 162, 63, .22);
+  --gold: #c9a23f;
+  --gold-soft: #e3c878;
+  --green: #0f4d3a;
+  --green-light: #1a6b52;
+  --text: #f1e8d4;
+  --muted: #a89f8a;
+  --danger: #e0693f;
+  --ok: #4fb286;
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+* { 
+    box-sizing: border-box;
+    margin: 0;
     padding: 0;
-    list-style: none;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+body { 
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+a { 
+    color: var(--gold); 
+    text-decoration: none; 
+}
+
+a:hover, a:focus { 
+    color: var(--gold-soft); 
+    text-decoration: underline; 
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--text);
+  letter-spacing: .02em;
+  line-height: 1.2;
+  margin: 0 0 .6em;
+}
+
+h1 { 
+    font-size: 2.2rem; 
+    text-transform: uppercase; 
+}
+
+h2 { 
+    font-size: 1.6rem; 
+}
+
+h4 { 
+    font-size: 1.1rem; 
+}
+
+p { 
+    margin: 0 0 1em; 
+}
+
+hr { 
+    border: 0; 
+    border-top: 1px solid var(--line); 
+    margin: 16px 0; 
+}
+
+.wrap { 
+    width: 100%; 
+    max-width: 1080px; 
+    margin: 0 auto; 
+    padding: 0 24px; 
+}
+
+.page { 
+    flex: 1; 
+    padding-top: 40px; 
+    padding-bottom: 60px; 
+}
+
+.muted { 
+    color: var(--muted); 
+}
+
+.accent { 
+    color: var(--gold); 
+}
+
+.site-header { 
+    border-bottom: 1px solid var(--line); 
+    background: var(--bg); 
+}
+
+.header-inner { 
+    display: flex; 
+    align-items: center; 
+    gap: 32px; 
+    min-height: 64px; 
+    flex-wrap: wrap; 
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: .06em;
+  color: var(--gold);
+}
+
+.brand:hover { 
+    text-decoration: none; 
+    color: var(--gold-soft); 
+}
+
+.main-nav { 
+    flex: 1; 
+}
+
+.main-nav ul { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 28px; 
+    list-style: none; 
+    margin: 0; 
+    padding: 0; 
+}
+
+.main-nav a {
+  color: var(--text);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.main-nav a:hover { 
+    color: var(--gold); 
+    text-decoration: none; 
+}
+
+.auth { 
+    display: flex; 
+    align-items: center; 
+    gap: 14px; 
+}
+
+.auth form { 
+    margin: 0; 
+}
+
+.user { 
+    color: var(--muted); 
+    font-size: .85rem; 
+}
+
+.btn-outline,
+input[type="submit"],
+button[type="submit"] {
+  display: inline-block;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 0;
+  padding: 8px 20px;
+  font-family: var(--font-body);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.btn-outline:hover,
+input[type="submit"]:hover,
+button[type="submit"]:hover {
+  background: var(--gold);
+  color: #111;
+  text-decoration: none;
+}
+
+.hero {
+  display: flex;
+  gap: 40px;
+  padding: 24px 0 56px;
+}
+
+.hero-text h1 { 
+    font-size: 2.8rem; 
+    margin-bottom: .5em; 
+}
+
+.hero-text p { 
+    color: var(--muted); 
+    margin-bottom: 1.6em; 
+}
+
+.section-title { 
+    text-transform: uppercase; 
+    margin: 32px 0 24px; 
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 3px;
+  margin-top: 10px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+}
+
+.stats li {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 18px 20px;
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+.stats strong { 
+    display: none; 
+}
+
+.stat-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--gold);
+  line-height: 1.1;
+}
+
+.cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+}
+
+.page ul:not(.stats) { 
+    list-style: none; 
+    padding: 0;
+    margin: 0 0 24px; 
+}
+
+.page ul:not(.stats) > li {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  padding: 12px 18px;
+  margin-bottom: 10px;
+}
+
+.text-success { 
+    color: var(--ok) !important; 
+}
+
+.text-danger  { 
+    color: var(--danger) !important; 
+}
+
+.text-warning { 
+    color: var(--gold) !important; 
+}
+
+.text-muted { 
+    color: var(--muted) !important; 
+}
+
+table { 
+    border-collapse: collapse; 
+    margin-bottom: 18px; 
+}
+
+th, td { 
+    padding: 6px 12px 6px 0; 
+    vertical-align: top; 
+    text-align: left; 
+    border: 0; 
+}
+
+label { 
+    color: var(--muted); 
+    font-weight: 500; 
+}
+
+input[type="text"], input[type="password"], input[type="email"],
+input[type="date"], input[type="number"], select, textarea {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  padding: 8px 10px;
+  min-width: 260px;
+  font-family: var(--font-body);
+}
+
+textarea { 
+    min-height: 120px; 
+}
+
+input:focus, select:focus, textarea:focus { 
+    outline: none; 
+    border-color: var(--gold); 
+}
+
+.helptext { 
+    display: block; 
+    color: var(--muted); 
+    font-size: .78rem; 
+    margin-top: 4px; 
+}
+
+.errorlist { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0 0 6px; 
+    color: var(--danger); 
+}
+
+.errorlist li { 
+    background: none !important; 
+    border: 0 !important; 
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 22px 0;
+  color: var(--muted);
+  font-size: .78rem;
+  text-align: center;
 }
